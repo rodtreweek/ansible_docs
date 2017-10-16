@@ -19,3 +19,4 @@ To be cont'd...
 - This is awesome: https://serversforhackers.com/c/an-ansible-tutorial - no more MCO wrangling for me :).
 - (brisk) video on user management role config: https://codereviewvideos.com/course/ansible-tutorial/video/how-to-manage-users-with-ansible
 - Some suggestions on user management here: https://dzone.com/articles/user-management-with-ansible
+- Ansible Galaxy vid here: https://codereviewvideos.com/course/ansible-tutorial/video/ansible-galaxy-tutorial
