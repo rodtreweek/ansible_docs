@@ -8,7 +8,10 @@ First you'll need to choose an installation method that would be most compatible
 
 Ansible is also relatively easy to configure and run as a non-root user, provided the user you're running it as has the ability to run sudo, and wouldn't be otherwise restricted from gaining local system privileges or need to authenticate through a proxy, etc. (of which there are also relatively straightforward ways by which to handle this condition, i.e. use of the "environment" built-in element in your playbooks, etc...).
 
-Since it's likely that you will encounter this as an early task, it's worthwhile to discuss how you might undertake very basic user management w/ Ansible - LDAP/more advanced integrations will be discussed (much) later. Once I have a basic/reasonable playbook for this I'll add it to this repo.  Until then, I'll be hunting around for what feels like a more or less scalable foundation for approaching this common task (along with perhaps a corresponding use case description, i.e. "installing pyenv with a couple of specific python version for all users of a particular system group, etc...).  To be cont'd...
+## Basic User Management
+Since it's likely that you will encounter the need to manage system users and groups as an early task with Ansible, and since I have not encountered much straightforward discussion of this task among the various guides/resources I've consulted initially (most seem more specifically interested in installing/maintaining packages and dependencies...) I'ts perhaps worthwhile to start our discussion and command/config examples specific to to this task. At the moment, I'm still considering what feels like the most scalable foundation for approaching this common task and iterating upon as requirements would seem to change (along with perhaps including instructions and sample code corresponding to a particular use case, i.e. "creating and adding users to a specific group, then installing pyenv with a couple of specific python version for all users of that system group, etc...).  
+
+To be cont'd...
 
 
 
