@@ -21,13 +21,13 @@ Ok. I'll just come clean here and say that Ansible *will allow you to fuck thing
 
 Soooooo - all this to say - "Stay tuned for my next github installment where I discuss being *completely accountable and sincerely apologizing to all the people whose data you just completely obliterated*, while - and this is important - *resisting the urge to defend yourself*".
 
-# Followed immediately by: 
+### Followed immediately by: 
 
 "Getting to work figuring out how to use `testdisk` and `photorec` along with some clever shell/python scripts you've hacked together for sorting through (hopefully) all the cryptically-named, root-owned files you now (again, hopefully) have saved on a separate partition you've thoughfully created - with ample space - smartly anticipating just such an occassion where you may need to recover stuff you likely won't have any backups for".
 
-# Which, of course, should then feature a FAQ with:
+### Which then includes an FAQ with:
 
-"How to answer the question: "Why wasn't any of this backed-up?" - which should really just link back to the "apology" article referenced above.
+1. How to answer the question: "Why wasn't any of this backed-up?" - which should really just link back to the first "apology" article referenced above.
 
 **I don't think I can state this more emphatically, *sometimes the problems with doing some form of "mass exec"-style command on the command-line aren't immediately obvious* **
 
