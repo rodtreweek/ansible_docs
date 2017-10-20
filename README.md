@@ -1,6 +1,6 @@
 # ansible_docs
 
-This is my dump for Ansible stuff. First observation: Wow, Ansible just works better with my brain :)
+This is my dump for Ansible stuff. Maybe I should look into the "Wiki" tab above....
 
 ## Getting started
 
