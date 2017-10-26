@@ -25,7 +25,7 @@ Soooooo - all this to say: "Stay tuned for my next github installment where I di
 
 "Rapidly getting to work figuring out how to use `testdisk` and `photorec` along with some clever shell/python scripts you've hacked together for sorting through (hopefully) all the cryptically-named, root-owned files you now (again, hopefully) have saved on a separate partition you've thoughfully created - with ample space - smartly anticipating just such an occassion where you may need to recover stuff you likely won't have any backups for".
 
-### Which should then naturally includes the FAQ item:
+### Which should then naturally include the FAQ item:
 
 1. How to answer the question: "Why wasn't any of this backed-up?" - which should really just link back to the first "apology" article referenced above.
 
