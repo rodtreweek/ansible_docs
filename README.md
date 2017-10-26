@@ -17,29 +17,30 @@ To be cont'd...
 
 ## **Update and MASSIVE WORD OF CAUTION**
 
-Ok. I'll just come clean here and say that Ansible *will allow you to fuck things up in powerfully destructive ways that Puppet will absolutely, and very intentionally, prevent you from doing, unless you say, opt to use some **completely unsupported and risky** "foreign language github MCO shell module" that allows you to do a direct exec across multiple hosts - the existence of which you only just discovered after a solid 45 minutes of determined googling...*
+Ok. I'll just come clean here and say that Ansible *will allow you to fuck things up in powerfully destructive ways that Puppet will absolutely and very intentionally prevent you from doing, unless you opt to use some **completely unsupported and risky** "foreign language github MCO shell module" - the existence of which you only discovered after a solid 45 minutes of determined googling - that allows you to do a direct exec across multiple hosts ...*
 
-Soooooo - all this to say - "Stay tuned for my next github installment where I discuss being *completely accountable and sincerely apologizing to all the people whose data you just completely obliterated*, while - and this is important - *resisting the urge to defend yourself*".
+Soooooo - all this to say: "Stay tuned for my next github installment where I discuss being *completely accountable and sincerely apologizing to all the people whose files you just obliterated*, while - and this is important - *resisting the urge to defend yourself*".
 
-### Followed immediately by: 
+### Immediately followed by Part II in the series:
 
-"Getting to work figuring out how to use `testdisk` and `photorec` along with some clever shell/python scripts you've hacked together for sorting through (hopefully) all the cryptically-named, root-owned files you now (again, hopefully) have saved on a separate partition you've thoughfully created - with ample space - smartly anticipating just such an occassion where you may need to recover stuff you likely won't have any backups for".
+"Rapidly getting to work figuring out how to use `testdisk` and `photorec` along with some clever shell/python scripts you've hacked together for sorting through (hopefully) all the cryptically-named, root-owned files you now (again, hopefully) have saved on a separate partition you've thoughfully created - with ample space - smartly anticipating just such an occassion where you may need to recover stuff you likely won't have any backups for".
 
-### Which then naturally includes the FAQ item:
+### Which should then naturally includes the FAQ item:
 
 1. How to answer the question: "Why wasn't any of this backed-up?" - which should really just link back to the first "apology" article referenced above.
 
-**I don't think I can state this more emphatically, *sometimes the problems with doing some form of "mass exec"-style command on the command-line aren't immediately obvious* **
+**I don't think I can state this more emphatically, *sometimes the problems with doing some form of arbitrary/ad hoc "mass exec"-style command on the command-line aren't immediately obvious***
 
-We *all* love to think *"wow, that's pretty stupid...I would never make that mistake..."* - but what none of us *really* realize (until that precise moment when we ourselves are having to face the music of this particular funeral dirge...) is that sometimes you might not even be able to **see** the error that you are about to make.  
+We *all* love to think *"wow, that's pretty stupid...I would never make that mistake..."* - but what none of us *really* realize (right on up to that precise, humbling moment when its our turn to face the music of this particular funeral dirge...) is that sometimes you might not even be able to **see** that critically disruptive error that you are about to make.  
 
-This can *very* easily result from having encountered some weird, inexplicable terminal issue, or some other anomaly that appears seemingly out of nowhere in your environment perhaps only after you do a `sudo bash`, which then either renders things *invisibly* or *incorrectly* - for example a jumbled mess of output from `ctrl + r`, which then gets even more messy once you attempt to "fix" the command by backspacing/editing it, which then leads to the realization that now *your cursor has suddenly disappeared*, and ultimately to what you *absolutely thought* was a lengthy, yet benign command line "ssh-in-a-for-loop"-string containing a harmless `ls -ld` now featuring the *terrifying inclusion of an `rm -rf`*, somehow "concatenated" from a previous command --**or** possibly resulting in alteration of the relative scope of an ad hoc `ansible` command - once *only* targeting localhost/vagrant/docker test environments - now unexpectedly matching either something in your Ansible `hosts` file, a file in your`group_vars` directory, or something else you forgot/didn't anticipate that's been **invisibly truncated/isn't appearing in stdout** included as, for example, a trailing `--extra-vars` flag, which you have now just unintentionally executed across your entire infrastructure :( 
+This can *very* easily result from having encountered some [weird, inexplicable terminal issue](#WHAAAAA?????), or some other anomaly appearing seemingly out of nowhere, or perhaps after you do a `sudo bash` or start a new tmux session, rendering command-line input/output *invisibly* or *incorrectly*. For example, you might find yourself squinting initially at a jumbled, barely coherent mess of output from `ctrl + r`, which you you then attempt to "fix" through a combination of `ctrl + arrow/a/e`, backspace, etc., which then leads to the realization that now *your cursor has suddenly disappeared*, before ultimately what you *absolutely thought* was a lengthy yet benign command-line "ssh-in-a-for-loop"-string containing a harmless `ls -ld` *now featuring the terrifying inclusion of an `rm -rf`*, somehow "concatenated" from a previous command -- **or** the alteration of the relative scope of an ad hoc `ansible` command - once *only* targeting localhost/vagrant/docker test instances - now unexpectedly matching either something/logic in your Ansible `hosts` file, ansible.cfg, a file in your`group_vars` or `host_vars` directories, or something else you forgot/didn't anticipate that's been **invisibly truncated/isn't appearing in stdout** like, for example, a trailing `--extra-vars` flag, which you have now just unintentionally executed across your entire infrastructure :( 
 
+##### WHAAAAA?????
 <img src="https://raw.githubusercontent.com/rodtreweek/i/master/ansible/term_probs.gif" height="450">
 
-**Bottom line: Think very hard about doing any form of "mass ssh" command-line execution, and DO NOT USE the Ansible shell module from the command-line unless you absolutely cannot accomplish what you seek in a more structured and suitably contained manner --and are absolutely certain you have functional backups for any damage you might do.** 
+**Bottom line: Think very hard about doing any form of arbitrary "mass ssh" direct command execution across hosts where the scope may not be immediately clear, and I STRONGLY urge you to avoid using the Ansible shell module ad hoc from the command-line unless you absolutely cannot accomplish what you seek in a more structured and suitably contained manner -- and are absolutely certain you have functional backups for any damage you might do.** 
 
-It's almost always going to be the wrong approach.  If you *absolutely believe* it's necessary, give yourself the rest of the day to think about it before you pull the trigger, since you might not *actually see* that the gun is pointed directly at your head :(
+It's almost always going to be the wrong approach.  If you *absolutely believe* that direct command execution is necessary as opposed to structuring your roles and playbooks in a manner enforcing the *desired state* of your infrastructure, give yourself the rest of the day to think about it before you pull the trigger, since you might not *actually see* that the gun is pointed directly at your head :(
 
 
 ## Links
