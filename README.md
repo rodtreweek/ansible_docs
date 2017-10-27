@@ -47,3 +47,4 @@ It's almost always going to be the wrong approach.  If you *absolutely believe* 
 - Some suggestions on user management here: https://dzone.com/articles/user-management-with-ansible
 - Ansible Galaxy vid here: https://codereviewvideos.com/course/ansible-tutorial/video/ansible-galaxy-tutorial
 - Ansible Galaxy role for pyenv: https://github.com/pyenv/pyenv
+- Traffic control: https://blog.scottlowe.org/2015/12/24/running-ansible-through-ssh-bastion-host/
