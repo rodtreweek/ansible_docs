@@ -48,4 +48,4 @@ It's certainly hard to resist the temptation - especially in an emergency situat
 - Ansible Galaxy vid here: https://codereviewvideos.com/course/ansible-tutorial/video/ansible-galaxy-tutorial
 - Ansible Galaxy role for pyenv: https://github.com/pyenv/pyenv
 - Traffic control: https://blog.scottlowe.org/2015/12/24/running-ansible-through-ssh-bastion-host/
-- Decent structure: https://alexbilbie.com/2014/07/using-ansible-with-a-bastion-host/
+- Best Practices: http://docs.ansible.com/ansible/latest/playbooks_best_practices.html
