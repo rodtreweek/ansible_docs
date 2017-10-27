@@ -37,9 +37,9 @@ This can *very* easily result from having encountered some weird, inexplicable t
 
 <img src="https://raw.githubusercontent.com/rodtreweek/i/master/ansible/term_probs.gif" height="450">
 
-**Bottom line: Think very hard about doing any form of arbitrary "mass ssh" direct command execution across hosts where the scope may not be immediately clear, and I STRONGLY urge you to avoid using the Ansible shell module ad hoc from the command-line unless you absolutely cannot accomplish what you seek in a more structured and suitably contained manner -- and are absolutely certain you have functional backups for any damage you might do.** 
+**Bottom line: Think very hard about doing any form of arbitrary "mass ssh" direct command execution across hosts where the scope may not be immediately clear, and I STRONGLY urge you to avoid using the Ansible shell module ad hoc from the command-line unless you absolutely cannot accomplish what you seek in a more structured and suitably contained manner -- AND are absolutely certain you have functional backups for any damage you might do.** 
 
-It's almost always going to be the wrong approach.  If you *absolutely believe* that direct command execution is necessary as opposed to properly structuring your roles and playbooks in a manner that would enforce the *desired state* of your infrastructure, give yourself the rest of the day to think about it before you pull the trigger, since you might not *actually see* that the gun is pointed directly at your head :(
+It's certainly hard to resist the temptation - especially in an emergency situation, or when the pressure of approaching deadlines or "quarterly goals" looms large - but it's almost always going to be the wrong approach.  If you *absolutely believe* that direct command execution is necessary as opposed to properly structuring your roles and playbooks in a manner that would enforce the *desired state* of your infrastructure, give yourself the rest of the day to think about it before you pull the trigger, since you might not *actually see* that the gun is pointed directly at your head :(
 
 
 ## Links
