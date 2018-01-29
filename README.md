@@ -49,4 +49,4 @@ It's certainly hard to resist the temptation - especially in an emergency situat
 - Ansible Galaxy role for pyenv: https://github.com/pyenv/pyenv
 - Traffic control: https://blog.scottlowe.org/2015/12/24/running-ansible-through-ssh-bastion-host/
 - Best Practices: http://docs.ansible.com/ansible/latest/playbooks_best_practices.html
-- Ansible administration from within WSL (Windows Subsystem for Linux): https://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux
+- Ansible administration from within WSL (Windows Subsystem for Linux): https://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux and: https://www.jeffgeerling.com/blog/running-ansible-within-windows
