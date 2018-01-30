@@ -6,6 +6,18 @@ This is my dump for Ansible stuff. Maybe I should look into the "Wiki" tab above
 
 First you'll need to choose an installation method that would be most compatible/sustainable with whichever host OS you choose to install Ansible on.  For me, this is currently Debian/Ubuntu, and I have chosen to use pip for my initial installation, which was quite easily done (I've now installed via both pip and apt-get and both appear to work fine, the only difference being that the apt-get method installs to /usr/bin/ansible, and pip installs it to /usr/local/bin/ansible...). Just to get a general feel for how things work, I'd recommend starting off by just issuing some ad hoc commands in Ansible **on some Vagrant/Docker test systems** (don't do this on any "live" systems...trust me, it's *very* easy to screw something up, and it's pretty easy to just spin something up with Docker, etc. to practice with...), which unlike Puppet, is *much* easier to do right out of the gate - since you're only using ssh keys, and not dealing with an entire certificate chain.  It's generally a good idea to start off by copying `/etc/ansible/ansible.cfg` to a subdirectory you create under your home directory, i.e. `~/ansible_test`, etc.  This way you'll have an unaltered original for reference later.
 
+**Note:** If you are trying to set Ansible up on WSL, you may encounter this error:
+ERROR! Unexpected Exception, this is probably a bug: 'module' object has no attribute 'SSL_ST_INIT'
+
+If you get this error, do the following:
+```
+$ sudo -E apt-get remove python-cryptography
+```
+```
+$ sudo -E apt-get install python-setuptools
+```
+- Which should fix this error.
+
 Ansible is also relatively easy to configure and run as a non-root user, provided the user you're running it as has the ability to run sudo, and wouldn't be otherwise restricted from gaining local system privileges or need to authenticate through a proxy, etc. (of which there are also relatively straightforward ways by which to handle this condition, i.e. use of the "environment" built-in element in your playbooks, etc...).
 
 Next, once you get comfortable with the basics, the super-important concept of "roles' will start to make sense.  I'd suggest doing a fair bit with the ad hoc commands and getting familiar with some of the underlying constructs available for use in your yaml/playbooks first, but you should *defintely* spend some time understanding roles immediately following (once you understand roles, then you will be pretty floored by what's available via `ansible-galaxy` - which would seemingly surpass what's available through Chef, Salt, Puppet, etc. - (I'll however give a nod to Puppet-DB here as to what's available relative to more massive scale-out considerations..)
