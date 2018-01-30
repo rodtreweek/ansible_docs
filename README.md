@@ -6,17 +6,18 @@ This is my dump for Ansible stuff. Maybe I should look into the "Wiki" tab above
 
 First you'll need to choose an installation method that would be most compatible/sustainable with whichever host OS you choose to install Ansible on.  For me, this is currently Debian/Ubuntu, and I have chosen to use pip for my initial installation, which was quite easily done (I've now installed via both pip and apt-get and both appear to work fine, the only difference being that the apt-get method installs to /usr/bin/ansible, and pip installs it to /usr/local/bin/ansible...). Just to get a general feel for how things work, I'd recommend starting off by just issuing some ad hoc commands in Ansible **on some Vagrant/Docker test systems** (don't do this on any "live" systems...trust me, it's *very* easy to screw something up, and it's pretty easy to just spin something up with Docker, etc. to practice with...), which unlike Puppet, is *much* easier to do right out of the gate - since you're only using ssh keys, and not dealing with an entire certificate chain.  It's generally a good idea to start off by copying `/etc/ansible/ansible.cfg` to a subdirectory you create under your home directory, i.e. `~/ansible_test`, etc.  This way you'll have an unaltered original for reference later.
 
-**Note:** If you are trying to set Ansible up on WSL, you may encounter this error:
-ERROR! Unexpected Exception, this is probably a bug: 'module' object has no attribute 'SSL_ST_INIT'
+Once you ar finished with the installation you can run `ansible --version` - which will give you a decent amount of useful info such as the `config file`, `configured module search path`, and relative locations for the ansible executable, ansible python module, and current python version use to run ansible.
 
-If you get this error, do the following:
+**Note:** If you are trying to get ansible working from within WSL, you may encounter this error:
+`ERROR! Unexpected Exception, this is probably a bug: 'module' object has no attribute 'SSL_ST_INIT'`
+
+If you run into this error, do the following to fix it:
 ```
 $ sudo -E apt-get remove python-cryptography
 ```
 ```
 $ sudo -E apt-get install python-setuptools
 ```
-- Which should fix this error.
 
 Ansible is also relatively easy to configure and run as a non-root user, provided the user you're running it as has the ability to run sudo, and wouldn't be otherwise restricted from gaining local system privileges or need to authenticate through a proxy, etc. (of which there are also relatively straightforward ways by which to handle this condition, i.e. use of the "environment" built-in element in your playbooks, etc...).
 
