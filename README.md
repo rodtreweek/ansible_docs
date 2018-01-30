@@ -43,7 +43,7 @@ It's certainly hard to resist the temptation - especially in an emergency situat
 
 
 ## Links
-- This is awesome: https://serversforhackers.com/c/an-ansible-tutorial - no more MCO wrangling for me :).
+- This is awesome: https://serversforhackers.com/c/an-ansible2-tutorial - no more MCO wrangling for me :).
 - Some suggestions on user management here: https://dzone.com/articles/user-management-with-ansible
 - Ansible Galaxy vid here: https://codereviewvideos.com/course/ansible-tutorial/video/ansible-galaxy-tutorial
 - Ansible Galaxy role for pyenv: https://github.com/pyenv/pyenv
