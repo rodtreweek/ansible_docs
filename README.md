@@ -67,7 +67,6 @@ It's certainly hard to resist the temptation - especially in an emergency situat
 ## Some General Troubleshooting Notes...
 
 Ok, so this came up, and I was initially scratching my head as to how this could possibly be happening...
-
 ```
 ansible-playbook <inventory file> -K
 SUDO password:
@@ -82,6 +81,7 @@ PLAY RECAP *********************************************************************
 server-name1                     : ok=17   changed=1    unreachable=0    failed=0
 server-name2                     : ok=0    changed=0    unreachable=0    failed=1
 ```
+
 What the ??...
 
 So I log into server-name1, just to see if I can indeed sudo with the *same exact password*:
@@ -103,6 +103,7 @@ ok: [server-name2]
 PLAY RECAP *********************************************************************
 server-name1                    : ok=17   changed=0    unreachable=0    failed=0
 server-name2                  : ok=17   changed=1    unreachable=0    failed=0
+```
 
 ...And this time it's fine.  I of course changed nothing...
 
