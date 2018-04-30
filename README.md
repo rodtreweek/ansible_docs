@@ -68,7 +68,7 @@ It's certainly hard to resist the temptation - especially in an emergency situat
 
 Ok, so this came up, and I was initially scratching my head as to how this could possibly be happening...
 
-``
+```
 ansible-playbook <inventory file> -K
 SUDO password:
 {…}
