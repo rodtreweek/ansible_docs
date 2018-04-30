@@ -54,15 +54,77 @@ Soooooo - all this to say: "Stay tuned for my next github installment where I di
 
 **I don't think I can state this more emphatically, *sometimes the problems with doing some form of arbitrary/ad hoc "mass exec"-style command on the command-line aren't immediately obvious***
 
-We *all* love to think *"wow, that's pretty stupid...I would never make that mistake..."* - but what none of us *really* realize (right on up to that precise, humbling moment when its our turn to face the music of this particular funeral dirge...) is that sometimes you might not even be able to **see** that critically disruptive error that you are about to make.  
+We *all* love to think *"wow, that's pretty stupid...I would never make that mistake..."* - but what none of us *really* realize - right on up to that precisely humbling moment when its our turn to face the music of this particular funeral dirge - is that sometimes **we might not even be able to see the critically disruptive error that we are about to make** - due to reasons ranging from [severe terminal emulation glitches](<img src="https://raw.githubusercontent.com/rodtreweek/i/master/ansible/term_probs.gif" height="450">), to "sh*t...did I accidentally put my wife's contact lenses in by mistake today??"*, or a combination of both personal and technical failings which then lead to squinting initially at a jumbled, barely coherent mess of output from `ctrl + r`, which we might then attempt to "fix" through a combination of `ctrl + arrow/a/e`, backspace, etc. - then leading to the sudden realization that now our *cursor has suddenly disappeared* - before ultimately what we *absolutely thought* was a lengthy, yet benign command-line "ssh-in-a-for-loop"-string containing a harmless `ls -ld` instead having somehow *reached backward into our history buffer to retrieve and concatenate a destructive `rm -rf` invisibly to the end of our ad-hoc ansible command* - once *only* targeting localhost/vagrant/docker test instances - now unexpectedly matching either something/some logic in our Ansible `hosts` file, ansible.cfg, a file in `group_vars`/`host_vars` directories, or something else we forgot/didn't anticipate which can't be observed in STDOUT :(
 
-This can *very* easily result from having encountered some weird, inexplicable terminal issue (see below), or some other anomaly appearing seemingly out of nowhere, or perhaps after you do a `sudo bash` or start a new tmux session, rendering command-line input/output *invisibly* or *incorrectly*. For example, you might find yourself squinting initially at a jumbled, barely coherent mess of output from `ctrl + r`, which you might then attempt to "fix" through a combination of `ctrl + arrow/a/e`, backspace, etc., which then leads to the realization that now *your cursor has suddenly disappeared*, before ultimately what you *absolutely thought* was a lengthy yet benign command-line "ssh-in-a-for-loop"-string containing a harmless `ls -ld` *now featuring the terrifying inclusion of an `rm -rf`*, which was somehow "concatenated" from a previous command -- **or** the alteration of the relative scope of an ad hoc `ansible` command - once *only* targeting localhost/vagrant/docker test instances - now unexpectedly matching either something/some logic in your Ansible `hosts` file, ansible.cfg, a file in your`group_vars`/`host_vars` directories, or something else you forgot/didn't anticipate that's been **invisibly truncated/isn't appearing in stdout** like, for example, a trailing `--extra-vars` flag, which you have now just unintentionally executed across your entire infrastructure :( 
+**Bottom line: Think very hard about doing any form of arbitrary "mass ssh" direct command execution across hosts where the scope/implications may not be immediately clear, and I STRONGLY urge you to avoid using the Ansible shell module ad hoc from the command-line unless you absolutely cannot accomplish what you seek in a more structured and suitably contained manner -- AND are absolutely certain you have functional backups for any damage you might do.**
 
-<img src="https://raw.githubusercontent.com/rodtreweek/i/master/ansible/term_probs.gif" height="450">
+It's certainly hard to resist the temptation - especially in an emergency situation, or when the pressure of approaching deadlines or "quarterly goals" looms large - ~but it's almost always going to be the wrong approach~ but it's infrequently necessary to do so under anything other than some pretty unique circumstances - which should almost certainly lead to immediate root cause analysis, and nomination as candidates for additional process-engineering.  If you *absolutely believe* that direct command execution is necessary as opposed to properly structuring your roles and playbooks in a manner that would enforce the *desired state* of your infrastructure, give yourself the rest of the day to think about it before you pull the trigger, since *you might not actually see* that the gun is pointed directly at your head :(
 
-**Bottom line: Think very hard about doing any form of arbitrary "mass ssh" direct command execution across hosts where the scope may not be immediately clear, and I STRONGLY urge you to avoid using the Ansible shell module ad hoc from the command-line unless you absolutely cannot accomplish what you seek in a more structured and suitably contained manner -- AND are absolutely certain you have functional backups for any damage you might do.** 
+## Some General Troubleshooting Notes...
 
-It's certainly hard to resist the temptation - especially in an emergency situation, or when the pressure of approaching deadlines or "quarterly goals" looms large - but it's almost always going to be the wrong approach.  If you *absolutely believe* that direct command execution is necessary as opposed to properly structuring your roles and playbooks in a manner that would enforce the *desired state* of your infrastructure, give yourself the rest of the day to think about it before you pull the trigger, since you might not *actually see* that the gun is pointed directly at your head :(
+Ok, so this came up, and I was initially scratching my head as to how this could possibly be happening...
+
+``
+ansible-playbook <inventory file> -K
+SUDO password:
+{…}
+PLAY [server-name1] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+fatal: [server-name1]: FAILED! => {"msg": "Incorrect sudo password"}
+ok: [server-name2]
+{…}
+PLAY RECAP *********************************************************************
+server-name1                     : ok=17   changed=1    unreachable=0    failed=0
+server-name2                     : ok=0    changed=0    unreachable=0    failed=1
+```
+What the ??...
+
+So I log into server-name1, just to see if I can indeed sudo with the *same exact password*:
+```
+ my_user@server-name1 $ sudo su -                                   
+[sudo] password for my_user:
+Last login: Tue Jan {…}
+[root@server-name1~]# exit
+logout
+Time: 10
+```
+
+Yep, just as i suspected, it's fine. - So, I try running my ansible-playbook command exactly as before:
+```
+TASK [Gathering Facts] *********************************************************
+ok: [server-name1]
+ok: [server-name2]
+{…}
+PLAY RECAP *********************************************************************
+server-name1                    : ok=17   changed=0    unreachable=0    failed=0
+server-name2                  : ok=17   changed=1    unreachable=0    failed=0
+
+...And this time it's fine.  I of course changed nothing...
+
+ Ok,  so after a pretty protracted troubleshooting effort making my way through each layer right on up through "Application", I found several things that were problematic...
+ * First, I had forgotten that I had changed the IP address on my “control” host (my laptop).
+ * Followed by the discovery that the `/etc/sudoers` files were different on the above two hosts
+ * I also had an error in my Ansible `ssh.cfg` file where I had duplicated my control_path entry (with different values)
+ 
+ Here's the result of running my playbook again *without* the -K option - *which should fail on both hosts* if /etc/sudoers isn't actually configured to allow password-less access to the wheel group (which, since these were my own personal dev/test hosts configured for “learning mode”, I’d opted for convenience over security and previously added an entry granting the wheel group root-level privileges…).
+```
+ansible-playbook <inventory file>
+{…}
+TASK [Gathering Facts] **********************************************************************
+fatal: []: FAILED! => {"changed": false, "module_stderr": "Shared connection to server-name1 closed.\r\n", "module_stdout": "sudo: a password is required\r\n", "msg": "MODULE FAILURE", "rc": 1}
+ok: [server-name2]
+```
+
+Ok, so it hits me:
+"Dude, remember when you f’d up and had to re-install sudo on server-name1? Yep...when you tried to install Vim 8 on that host, you accidentally removed "vim-minimal" - which is a sneaky bit of dependency trickery that actually takes along sudo if you choose to remove it without carefully reviewing the dependency list prior...”
+…ok so here is the missing "warning label" that everyone should get along with (at least) CentOS 7.x:
+
+*WARNING!!!!  if you remove vim-minimal, you may also end-up removing sudo, and by extension the /etc/sudoers file - which will likely then screw up a lot of stuff like the use of ansible for login and execution of privileged tasks.*
+
+Again, in my case since these were personal test/dev systems I’d set up for practice, and was allowing password-less wheel on one host – but was using the default /etc/sudoers file on the other (due to the reinstallation of sudo on that host) - and thus not allowing wheel access this was why I needed to enter a password on server-name1 - post-screwup while installing Vim 8.
+
+All this to say I guess, that for whatever it’s worth, if your ssh.cfg doesn't contain duplicate control paths *and* you’ve added your user to the wheel group, while `%wheel  ALL=(ALL)   NOPASSWD: ALL` exists in your /etc/sudoers file on each of the remote hosts you intend to manage, *and* no other gid/uid/restrictive path entries would appear to be holding you back - you shouldn't actually need to use the -K option when running ansible-playbook commands -- however, under most circumstances this is probably not a great idea, and unless you have a compelling reason not to, you should really require the use of -K when issuing commands with `sudo` on remote hosts :)
 
 
 ## Links
