@@ -3,7 +3,7 @@
 This is my dump for Ansible stuff.
 ## Getting started
 
-First you'll need to choose an installation method that would be most compatible/sustainable with whichever host OS you choose to install Ansible on.  For me, this is currently Debian/Ubuntu, and I have chosen to use pip for my initial installation, ~which was quite easily done (I've now installed via both pip and apt-get and both appear to work fine, the only difference being that the apt-get method installs to /usr/bin/ansible, and pip installs it to /usr/local/bin/ansible...)~ **Update:** After some *extreme* sluggishness using pip to install/update ansible on WSL, and the perplexing disappearance of my config file location after upgrading to 2.4.2, I've decided to switch back to using `apt-get` to install/manage the ansible package. Here's what I did:
+First you'll need to choose an installation method that would be most compatible/sustainable with whichever host OS you choose to install Ansible on.  For me, this is currently the flavor of Ubuntu available on WSL, and I have chosen to use pip for my initial installation, ~which was quite easily done (I've now installed via both pip and apt-get and both appear to work fine, the only difference being that the apt-get method installs to /usr/bin/ansible, and pip installs it to /usr/local/bin/ansible...)~ **Update:** After some *extreme* sluggishness using pip to install/update ansible on WSL, and the perplexing disappearance of my config file location after upgrading to 2.4.2, I've decided to switch back to using `apt-get` to install/manage the ansible package. Here's what I did:
 ```
 $ sudo -EH pip uninstall ansible
 $ sudo -E apt-get update
