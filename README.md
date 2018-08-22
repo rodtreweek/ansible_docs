@@ -15,7 +15,7 @@ $ sudo -E apt-get install ansible
 
 Just to get a general feel for how things work, I'd recommend starting off by just issuing some ad hoc commands in Ansible **on some Vagrant/Docker test systems** (don't do this on any "live" systems...trust me, it's *very* easy to screw something up, and it's pretty easy to just spin something up with Docker, etc. to practice with...), which unlike Puppet, is *much* easier to do right out of the gate - since you're only using ssh keys, and not dealing with an entire certificate chain.  It's generally a good idea to start off by copying `/etc/ansible/ansible.cfg` to a subdirectory you create under your home directory, i.e. `~/ansible_test`, etc.  This way you'll have an unaltered original for reference later.
 
-Once you ar finished with the installation you can run `ansible --version` - which will give you a decent amount of useful info such as the `config file`, `configured module search path`, and relative locations for the ansible executable, ansible python module, and current python version use to run ansible.
+Once you are finished with the installation you can run `ansible --version` - which will give you a decent amount of useful info such as the `config file`, `configured module search path`, and relative locations for the ansible executable, ansible python module, and current python version use to run ansible.
 
 **Note:** If you are trying to get ansible working from within WSL, you may encounter this error:
 `ERROR! Unexpected Exception, this is probably a bug: 'module' object has no attribute 'SSL_ST_INIT'`
